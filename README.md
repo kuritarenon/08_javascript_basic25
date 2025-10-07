@@ -7,7 +7,22 @@
 
 ### 9月30日
 
-####イベント
+#### 変数宣言
+```
+let 変数名 = 値;
+```
+
+#### 要素の取得
+```
+document.querySlector(CSSセレクター);
+```
+
+#### 要素の変更
+```
+要素.textContent = '変更したいテキスト';
+```
+
+#### イベント処理
 ```
 Btn.addEventListener('click', function ()){}
 ```
