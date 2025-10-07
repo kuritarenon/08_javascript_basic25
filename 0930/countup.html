@@ -20,12 +20,23 @@
         // documentはHTMLのこと
         // CSSセレクターは、CSSで使うセレクターのこと
         console.log(counter);// ｐがはいってる
-        counter.textContent = count; // p要素のテキストをcount(0)にする
+        counter.textContent = count; // p要素のテキストをcount(0)にする　　// プロパティ
 
         // 素材は全部取り込む
         // 変数宣言を全部constにする
         let plusBtn = document.querySelector("#plus");
         console.log(plusBtn)
+
+        // クリックイベントを登録
+        plusBtn.addEventListener('click', function () {
+            console.log("クリックしたぞ");
+            // count = count + 1
+            // console.log(a);
+            // インクリメント
+            count++;// count=count+1と同じ意味
+            console.log(count);
+            counter.textContent = count;
+        })
 
         let a; // 変数の宣言
         console.log(a);// undefind値がない
@@ -39,6 +50,7 @@
         console.log("b");// ダブルコーテーションは文字列
 
         // let b = 40;  同じ変数名では、宣言ができない
+        // 再代入はできる
     </script>
 
 </body>
