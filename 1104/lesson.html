@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>復習</title>
+    <style>
+        .doctitle span {
+            color: #ff0000;
+        }
+
+        li {
+            color: #0000FF;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .orange {
+            color: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="doctitle"><span>1</span>タイトルですよ</h1>
+    <h2>サブタイトル</h2>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li class="orange">5</li>
+    </ul>
+    <button>色を変える</button>
+    <script>
+        // 要素の取得（クラスは.idは＃、[type]属性セレクタ
+        // スペースの意味＝子孫セレクタ
+        // document.querySelector('.doctitle span');
+
+        // 変数への代入（const 変数名＝代入するもの）
+        // 基本的に2種類
+        // なんでもかんでも変数に入れる
+        // const title = document.querySelector('.doctitle span');
+        // const num = 0;
+        // console.log(title);// 1
+        // console.log(num);// 0
+
+        // 変数constとletの使い分け
+        // const text = "コンスト";
+        // text = 'レット'; って入れられない。再宣言・再代入ができない
+
+        // let text2 = "レット";
+        // text2 = 'レット２';
+        // 置き換えられる、再宣言X　再代入o
+
+        // クリックイベント（取得した要素.add）
+        // title.addEventListener('click', function () {
+        //     aleat('スパン');
+        // });
+
+        // ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+        // 練習！！
+        // JavaScriptの世界に取り込む
+
+        const sab = document.querySelector('h2');
+        console.log(sab);
+
+        sab.addEventListener('click', function () {
+            alert('サブ');
+        });
+
+        // ------------------------------------------------------------------
+
+        // 複数要素の取得
+        const lists = document.querySelectorAll('li');
+        console.log(lists);
+
+        // nodelist=配列っぽいもの＝インデックス・添字(0から始まる数値)
+
+        // console.log(lists(2));
+        // console.log(lists(4));
+
+        // // if文
+        // let number = 1;
+        // if (number === 1) {
+        //     console.log = ('1です');
+        // } else is(number === 2){
+        //     console.log = ('1です')
+
+        // }
+
+        // -----------------------------------------------------------------
+
+        // 練習！！
+        const animals = ['いぬ', 'ねこ', 'りす', 'サメ'];
+        console.log(animals);
+
+        for (let i = 0; i < animals.length; i = i + 1) {
+            console.log(animals[i]);
+        }
+
+        // -----------------------------------------------------------------
+
+        // listをとる
+        for (let i = 0; i < 5; i = i + 1) {
+            console.log(lists[i]);
+        }
+
+        //クラス属性の追加・削除
+        // lists[1].classList.add('green');
+        // lists[4].classList.remove('orange');
+
+        // 関数の定義と実行
+        // 関数の定義
+        function chengeColor() {
+            lists[1].classList.add('green');
+            lists[4].classList.remove('orange');
+        }
+        // 関数の実行
+        // chengeColor();
+
+        // -----------------------------------------------------------------
+        // 練習！！
+
+        const btn = document.querySelector('button')
+
+        btn.addEventListener('click', function () {
+            chengeColor();
+        });
+    </script>
+
+</body>
+
+</html>
