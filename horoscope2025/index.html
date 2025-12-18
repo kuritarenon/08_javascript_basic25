@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12星座の星占い</title>
+
+    <style>
+        body {
+            background-image: url(./images/background.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            font-family: sans-serif;
+            font-size: 16px;
+            text-align: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #fff;
+            margin: 80px 0;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: titleFade 1.8s ease-out forwards;
+        }
+
+        @keyframes titleFade {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(5px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        .zodiac-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .zodiac-card {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .zodiac-card img {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .zodiac-label {
+            color: #fff;
+            margin-top: 5px;
+            font-size: 13px;
+        }
+
+        .result {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            color: #fff;
+            padding: 10px;
+            font-size: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .zodiac-card.show .result {
+            opacity: 1;
+        }
+
+        /* クリック拡大 */
+        #imgModal {
+            position: fixed;
+            inset: 0;
+            background: color-mix(in srgb, var(--light-color) 60%, transparent);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        #modalResultBox {
+            width: 500px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            font-size: 18px;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+
+        #imgModal.show #modalResultBox {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #modalResultBox p {
+            margin-bottom: 20px;
+        }
+
+        #modalResultBox p:first-child {
+            margin: 0 auto 20px auto;
+        }
+
+        #modalResultBox h2 {
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        #modalResultBox p:nth-of-type(1) strong,
+        #modalResultBox p:nth-of-type(2) strong,
+        #modalResultBox p:nth-of-type(3) strong {
+            display: inline-block;
+            border-bottom: 1px solid var(--light-color);
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+        }
+
+        :root {
+            --light-color: rgba(255, 255, 255, 1);
+        }
+
+        .light-circle {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--light-color) 0%, rgba(255, 255, 255, 0) 80%);
+            opacity: 0.9;
+            transform: scale(0);
+            animation: expandLight 3s ease-out forwards;
+            box-shadow: 0 0 40px 20px rgba(160, 190, 255, 0.55);
+        }
+
+        @keyframes expandLight {
+            0% {
+                transform: scale(0);
+                opacity: 0.9;
+            }
+
+            40% {
+                transform: scale(20);
+                opacity: 0.35;
+            }
+
+            70% {
+                transform: scale(45);
+                opacity: 0.18;
+            }
+
+            100% {
+                transform: scale(65);
+                opacity: 0;
+            }
+        }
+
+        .light-ring {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--light-color) 0%, rgba(255, 255, 255, 0) 100%);
+            filter: blur(25px);
+            animation: expandRing 3s ease-out forwards;
+            opacity: 0.8;
+        }
+
+        @keyframes expandRing {
+            0% {
+                transform: scale(0);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(25);
+                opacity: 0.25;
+            }
+
+            100% {
+                transform: scale(60);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>12星座の星占い</h1>
+
+    <div class="zodiac-container">
+
+        <div class="zodiac-card"><img src="./images/27091106_01.png" alt="おひつじ座">
+            <p class="zodiac-label">おひつじ座<br>（3/21〜4/19）</p>
+            <div class="result"></div>
+        </div>
+        <div class="zodiac-card"><img src="./images/27091106_02.png" alt="おうし座">
+            <p class="zodiac-label">おうし座<br>（4/20〜5/20）</p>
+            <div class="result"></div>
+        </div>
+        <div class="zodiac-card"><img src="./images/27091106_03.png" alt="ふたご座">
+            <p class="zodiac-label">ふたご座<br>（5/21〜6/21）</p>
+            <div class="result"></div>
+        </div>
+        <div class="zodiac-card"><img src="./images/27091106_04.png" alt="かに座">
+            <p class="zodiac-label">かに座<br>（6/22〜7/22）</p>
+            <div class="result"></div>
+        </div>
+        <div class="zodiac-card"><img src="./images/27091106_05.png" alt="しし座">
+            <p class="zodiac-label">しし座<br>（7/23〜8/22）</p>
+            <div class="result"></div>
+        </div>
+        <div class="zodiac-card"><img src="./images/27091106_06.png" alt="おとめ座">
+            <p class="zodiac-label">おとめ座<br>（8/23〜9/22）</p>
+            <div class="result"></div>
+        </div>
+        <div class="zodiac-card"><img src="./images/27091106_07.png" alt="てんびん座">
+            <p class="zodiac-label">てんびん座<br>（9/23〜10/23）</p>
+            <div class="result"></div>
+        </div>
+        <div class="zodiac-card"><img src="./images/27091106_08.png" alt="さそり座">
+            <p class="zodiac-label">さそり座<br>（10/24〜11/22）</p>
+            <div class="result"></div>
+        </div>
+        <div class="zodiac-card"><img src="./images/27091106_09.png" alt="いて座">
+            <p class="zodiac-label">いて座<br>（11/23〜12/21）</p>
+            <div class="result"></div>
+        </div>
+        <div class="zodiac-card"><img src="./images/27091106_10.png" alt="やぎ座">
+            <p class="zodiac-label">やぎ座<br>（12/22〜1/19）</p>
+            <div class="result"></div>
+        </div>
+        <div class="zodiac-card"><img src="./images/27091106_11.png" alt="みずがめ座">
+            <p class="zodiac-label">みずがめ座<br>（1/20〜2/18）</p>
+            <div class="result"></div>
+        </div>
+        <div class="zodiac-card"><img src="./images/27091106_12.png" alt="うお座">
+            <p class="zodiac-label">うお座<br>（2/19〜3/20）</p>
+            <div class="result"></div>
+        </div>
+
+    </div>
+
+    <div id="lightExpandModal"
+        style="position:fixed; inset:0; background:#ffffff; display:none; justify-content:center; align-items:center; z-index:3000; overflow:hidden;">
+        <div class="light-circle"></div>
+        <div class="light-ring"></div>
+    </div>
+
+    <!-- 結果表示モーダル -->
+    <div id="imgModal">
+        <div id="modalResultBox"></div>
+    </div>
+
+    <script>
+        const fortunes = [
+            "新しい出会いや情報に恵まれる月。積極的に動くことで思いがけないチャンスが舞い込み、未来への良い流れを作れそうです。普段と違う選択をすると視野が広がり、あなたの可能性をさらに大きく広げるきっかけにもなります。人とのつながりを大切にして行動すると素敵な結果に結びつきます。",
+            "体調運が安定して努力が実りやすい時期。無理をしなければ大きな成果につながり、自信を深めるきっかけにもなります。コツコツ続けてきたことが形になりやすく、周囲からの評価も高まりそうです。生活習慣を整えるとさらに運気が安定し、良い流れを長く維持できます。",
+            "抱えていた小さな悩みが自然と解決し、気持ちが軽くなる月。前向きな気分が戻り、新しいことにも挑戦しやすくなります。周囲との会話の中でヒントを得たり、思わぬ助けが入ったりする可能性も。気分転換を積極的に取り入れることで運気がさらに上向きになります。",
+            "金運が上昇し、欲しかった物や必要な物が手に入りやすい時期。計画的に動くことでさらに良い結果を引き寄せられます。買い物運も良く、長く使えるお気に入りが見つかりそうです。ただし衝動買いには注意し、冷静に判断するとより良い選択ができます。",
+            "仲間や家族との関係が深まり、温かい時間が増える月。交流があなたに幸運を運び、心の充実を感じられそうです。気持ちを素直に伝えることで絆が深まり、安心できる環境が整います。誰かのために行動すると、その優しさが巡り巡ってあなたにも返ってきます。",
+            "集中力が高まり、仕事や勉強が驚くほどスムーズに進む時期。コツコツ続けるほど成果が見え、達成感を味わえるでしょう。難しい課題もクリアしやすいため、先延ばしにしていたことに手をつけるチャンスです。計画を立てながら進めると効率よく成長できます。",
+            "これまでの努力が認められ、良い評価やチャンスを得られやすい月。自信を持って行動するとさらに運が味方します。周囲から頼りにされることが増え、活躍の場が広がりそうです。遠慮せず前に出ることで新しい流れが生まれ、より大きな成果につながります。",
+            "家でゆっくり過ごす時間が運気アップの鍵。心と体が整い、次のステップへ進むためのエネルギーをしっかり蓄えられます。無理をしないことで自然とやる気が戻り、気力が充実していくのを感じられるでしょう。部屋の模様替えや掃除も運気アップにつながります。",
+            "直感が冴え、ひらめきが成功のきっかけになる月。思いついたことはメモしておくと、後で大きなチャンスにつながります。新しいアイデアが次々と浮かび、創造力が豊かになる時期です。小さな気づきを大切にすると運が味方し、理想に近づける行動が自然とできます。",
+            "思い切った行動が幸運を引き寄せる時期。少しの勇気が大きな成果を生むので、迷ったら前向きな選択をすると良いです。変化を恐れず一歩踏み出すことで、新しい世界が広がります。積極的な姿勢が周囲にも良い印象を与え、あなたの魅力がより輝く時期になります。",
+            "前向きな考え方が幸運を呼び寄せる月。小さな良いことを大切にすると、より大きな流れがあなたに向かってくるでしょう。物事を明るく捉えることで運気が安定し、自然とチャンスが集まってきます。感謝の気持ちを忘れずに行動すると、さらに良い結果につながります。",
+            "大切な人との絆が深まり、心が満たされる温かい月。普段言えない気持ちを伝えると、関係がさらに良い方向へ進みます。相手に寄り添う姿勢が信頼を強め、安心できる人間関係が築かれます。過ごす時間を大切にすることで、心の余裕が生まれ穏やかな日々を感じられます。"
+        ];
+
+        const luckyNumbers = [1, 3, 5, 7, 9, 12, 14, 17, 21, 25, 28, 30];
+        const luckyItems = [
+            "青い小物", "白いハンカチ", "お気に入りの文具", "ホットドリンク",
+            "革の財布", "新しいアプリ", "緑色のアクセサリー", "手帳",
+            "アロマグッズ", "帽子", "靴磨きセット", "メガネ"
+        ];
+
+        // --- 重複しないように管理 ---
+        let usedFortuneIndexes = [];
+        let usedNumberIndexes = [];
+        let usedItemIndexes = [];
+
+        function getUniqueIndex(arrayName, usedIndexes) {
+            if (usedIndexes.length >= arrayName.length) return null;
+            let idx;
+            do {
+                idx = Math.floor(Math.random() * arrayName.length);
+            } while (usedIndexes.includes(idx));
+            usedIndexes.push(idx);
+            return idx;
+        }
+
+        const zodiacColors = [
+            "#ff0000",
+            "#0033ff",
+            "#ff7f00",
+            "#8000ff",
+            "#ffd400",
+            "#00b35c",
+            "#ff69b4",
+            "#ccff00",
+            "#00c8ff",
+            "#00e5d4",
+            "#000000"
+        ];
+
+        // 星座クリック時の処理
+        const cards = document.querySelectorAll(".zodiac-card");
+
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].addEventListener("click", function () {
+
+                // すでに結果がある場合は新しく作らないようにする
+                if (cards[i].dataset.resultHtml) {
+                    return;
+                }
+
+                const fortuneIndex = getUniqueIndex(fortunes, usedFortuneIndexes);
+                const numberIndex = Math.floor(Math.random() * luckyNumbers.length);
+                const itemIndex = Math.floor(Math.random() * luckyItems.length);
+
+                // 取得する星座名
+                const name = cards[i].querySelector(".zodiac-label").innerHTML.split("<br>")[0];
+                cards[i].dataset.resultHtml = `
+                    <h2>${name}のあなたへ</h2>
+                    <p><strong>12月の運勢</strong><br>${fortunes[fortuneIndex]}</p>
+                    <p><strong>ラッキーナンバー</strong><br>${luckyNumbers[numberIndex]}</p>
+                    <p><strong>ラッキーアイテム</strong><br>${luckyItems[itemIndex]}</p>
+                `;
+            });
+        }
+
+        //結果を表示
+        const modal = document.getElementById("imgModal");
+        const modalResultBox = document.getElementById("modalResultBox");
+        const allCards = document.querySelectorAll(".zodiac-card");
+
+        for (let i = 0; i < allCards.length; i++) {
+            allCards[i].addEventListener("click", function () {
+                const savedResult = allCards[i].dataset.resultHtml || "";
+
+                const lightModal = document.getElementById("lightExpandModal");
+
+                document.documentElement.style.setProperty("--light-color", zodiacColors[i]);
+
+                lightModal.style.display = "flex";
+
+                setTimeout(() => {
+                    lightModal.style.display = "none";
+                    modalResultBox.innerHTML = savedResult;
+                    modal.style.display = "flex";
+                    setTimeout(() => { modal.classList.add("show"); }, 10);
+                }, 1000);
+            });
+        }
+
+        modal.addEventListener("click", function () {
+            modal.classList.remove("show");
+            setTimeout(() => { modal.style.display = "none"; }, 500);
+        });
+
+    </script>
+
+</body>
+
+</html>
