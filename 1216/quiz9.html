@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>リテラル、関数式、アロー関数、戻り値</title>
+</head>
+
+<body>
+    <script>
+        //問題1
+        const site = {
+            title: 'Portfolio',
+            author: 'Yamada',
+            themeColor: '#ff9900',
+        };
+
+        //問題2
+        const getTotalPrice = function (price) {
+            const tax = 0.1;
+            return price + price * tax;
+        };
+        getTotalPrice(1000); //1100
+
+        //問題3
+        // function isInStock(stock) {
+        //   if (stock > 0) {
+        //     return true;
+        //   } else {
+        //     return false;
+        //   }
+        // }
+
+        const isInStock = (stock) => {
+            if (stock > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        //問題4
+        const items = ['財布', '鍵', 'スマホ'];
+        const getCount = (items) => {
+            return `持ち物は${items.length}個です。`;
+        };
+        getCount(items);
+
+        //問題5
+        const product = { name: 'ノート', price: 300 };
+        const getSalePrice = function (product) {
+            return product.price * 0.8;
+        };
+        getSalePrice(product);
+    </script>
+</body>
+
+</html>
