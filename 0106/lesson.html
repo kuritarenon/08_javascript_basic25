@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スコープほか</title>
+</head>
+
+<body>
+    <script>
+        // ローカルスコープで同じなのにわざわざ関数とブロックに分けるのは「varは関数スコープでlet.constがブロックスコープだから」
+        // // 関数スコープ（ローカルスコープ）
+        // // 関数の定義
+        // function sample() {
+        //     const x = 10;
+        //     console.log(x);
+        // }
+        // // 関数の呼び出し（関数の実行）
+        // sample();// 10
+        // console.log(x); //sampleの関数内部からxを参照することができる。
+        // ---------------------------------------------------------------
+        // // ブロックスコープ（ローカルスコープ）
+        // if (true) {
+        //     const x = 10;
+        //     console.log(x);
+        // }
+        // console.log(x);
+        // // エラー：xは関数の中でしか使えない
+        // ---------------------------------------------------------------
+        // // グローバルスコープ(基本どこからでも参照することができる)
+        // const z = 1;
+        // // 関数の定義
+        // function doSomething() {
+        //     console.log(z); //1
+        // }
+        // if (true) {
+        //     console.log(z); //1
+        // }
+        // // 関数の呼び出し（実行）
+        // doSomething(); // 1
+        // ---------------------------------------------------------------
+        // const a = 1; //グローバルスコープ
+        // function doSomething1() {
+        //     const a = 2; //関数スコープ
+        //     console.log(a + '関数スコープ'); //関数スコープからaを参照
+        //     if (true) {
+        //         const a = 3; //ブロックスコープ
+        //         console.log(a + 'ブロックスコープ'); //ブロックスコープからaを参照
+        //     }
+        //     console.log(a + '関数スコープ');
+        // }
+        // doSomething1();
+        // function doSomething2() {
+        //     const b = 1; //関数スコープ
+        //     b = 2; //使うことができない。
+        //     // let constでもエラーになる
+        //     // letがなければ、再代入できる
+        //     // constだったら、再代入もできない
+        //     // ES12015以降は、varは使わないことが推奨されています
+        // }
+        // doSomething2();
+        // ---------------------------------------------------------------
+        // // オブジェクトとのメソッド
+        // const person = {
+        //     name: 'アリス',// 文字列＝＝プロバティ
+        //     age: 20,// 数値＝＝プロバティ
+        //     interests: ['読書', '料理'],// 配列＝＝プロバティ
+        //     greet: function () {
+        //         console.log('こんにちは');
+        //         // windowオブジェクト＋組み込み関数
+        //         // 関数式＝＝メソッド
+        //     }
+        // };
+        // // 関数を呼び出す（実行）
+        // person.greet();// こんにちは
+        // // 何かの値に（）がついていたら、それは関数の呼び出し（実行）
+        // // 関数が宣言されているか？もしくは、JavaScriptに組み込まれている関数か？
+        // // そのときに上からも下からも読み込めるようになってると探すのが大変になる
+        // console.log(person.name);// アリス
+        // ---------------------------------------------------------------
+        // // メソッドのthis
+        // const person2 = {
+        //     name: 'Alice',
+        //     greet: function () {
+        //         console.log(`こんにちは、私は${this.name}です`);
+        //         // テンプレートリテラル
+        //     }
+        // }
+        // person2.greet(); //こんにちは、私はAliceです
+        // // オブジェクトの値を上書きする
+        // person2.name = 'Bob';// Bobを代入
+        // // メソッドの呼び出し（実行）
+        // person2.greet(); // こんにちは、私はBobです
+        // console.log(person2.name);// Bob
+        // ---------------------------------------------------------------
+        // 配列のlengtha(要素の数)
+        const interests = ['読書', '料理', 'キャンプ'];
+        const count = interests.length;
+        console.log(count); //3
+
+        // 配列の最後尾に要素を追加
+        interests.push('散歩'); // 配列の末尾に要素を追加
+        console.log(interests); // ['読書', '料理', 'キャンプ','散歩'];
+        console.log(interests[3]);// 散歩
+
+        // 配列の最後尾から値を取り出す（削除する）
+        const alphabet = ['a', 'b', 'c'];
+        const last = alphabet.pop();
+        console.log(last); //c
+        console.log(alphabet); //['a', 'b']
+        // pop（）は、配列の最後尾の要素を取り出すと、同時に配列の要素数も減る
+    </script>
+
+</body>
+
+</html>
